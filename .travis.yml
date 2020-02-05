@@ -9,6 +9,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - cd api
+install:
+- gem install rails
 before_script:
 - docker-compose up
 - sleep 30
