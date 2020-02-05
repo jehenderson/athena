@@ -9,6 +9,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
   - cd api
+env:
+  - RAILS_ENV=test
 install:
 - gem install rails
 - mkdir -p ~/api/build/jehenderson/athena/db
@@ -16,6 +18,6 @@ before_script:
 - docker-compose up -d
 - docker ps -a
 script:
-- rails test
+-docker exec bin/rake db:create db:migrate
 after_script:
 - docker-compose down
