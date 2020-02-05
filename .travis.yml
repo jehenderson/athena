@@ -14,7 +14,6 @@ install:
 - mkdir -p ~/api/build/jehenderson/athena/db
 before_script:
 - docker-compose up -d
-- sleep 30
 - docker ps -a
 after_script:
 - docker-compose down
