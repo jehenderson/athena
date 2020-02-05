@@ -15,5 +15,7 @@ install:
 before_script:
 - docker-compose up -d
 - docker ps -a
+script:
+- rails test
 after_script:
 - docker-compose down
