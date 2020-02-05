@@ -1,6 +1,6 @@
-language: ruby
 services:
 - docker
+language: ruby
 env:
   - DOCKER_COMPOSE_VERSION=1.24.1
 before_install:
@@ -18,6 +18,6 @@ before_script:
 - docker-compose up -d
 - docker ps -a
 script:
--docker exec bin/rake db:create db:migrate
+- puts "Needs some work!"
 after_script:
 - docker-compose down
