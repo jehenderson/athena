@@ -9,7 +9,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 install:
-- mkdir ~/build/jehenderson/athena/db"
+- mkdir -p ~/build/jehenderson/athena/db"
 before_script:
 - docker-compose up -d
 - sleep 30
