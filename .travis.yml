@@ -17,6 +17,8 @@ jobs:
       - docker-compose up
       script:
       - python -c "print('Hi from Python!')"
+      after_script:
+      - docker-compose down
 
     - language: node_js
       cache:
@@ -29,3 +31,5 @@ jobs:
       - docker-compose up
       script:
       - node -e "console.log('Hi from NodeJS!')"
+      after_script:
+      - docker-compose down
