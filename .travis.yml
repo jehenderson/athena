@@ -15,7 +15,7 @@ install:
 - gem install rails
 - mkdir -p ~/api/build/jehenderson/athena/db
 before_script:
-- docker-compose up -d
+# - docker-compose up -d
 - docker ps -a
 script:
 - puts "Needs some work!"
