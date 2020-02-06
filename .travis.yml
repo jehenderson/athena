@@ -9,18 +9,18 @@ before_install:
 - sudo mv docker-compose /usr/local/bin
 jobs:
   include:
-  - language: ruby
-    install:
-    - cd api
-    - docker-compose build
-    before_script:
-    - docker-compose up -d
-    - sleep 10
-    - docker ps -a
-    script:
-    - curl localhost:8080 -f
-    after_script:
-    - docker-compose down
+  # - language: ruby
+  #   install:
+  #   - cd api
+  #   - docker-compose build
+  #   before_script:
+  #   - docker-compose up -d
+  #   - sleep 10
+  #   - docker ps -a
+  #   script:
+  #   - curl localhost:8080 -f
+  #   after_script:
+  #   - docker-compose down
   - language: node_js
     cache:
       directories:
