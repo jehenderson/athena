@@ -1,41 +1,48 @@
 env:
-- DOCKER_COMPOSE_VERSION=1.24.1
+  matrix:
+  - DOCKER_COMPOSE_VERSION=1.24.1
 before_install:
 - sudo rm /usr/local/bin/docker-compose
 - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
   -s`-`uname -m` > docker-compose
 - chmod +x docker-compose
 - sudo mv docker-compose /usr/local/bin
-
 jobs:
   include:
-    - language: python
-      install:
-      - cd api
-      - docker-compose build
-      before_script:
-      - docker-compose up -d
-      - sleep 10
-      - docker ps -a
-      script:
-      - curl localhost:8080 -f
-      - python -c "print('Hi from Python!')"
-      after_script:
-      - docker-compose down
-
-    - language: node_js
-      cache:
-        directories:
-          - node_modules
-      install:
-      - cd client
-      - docker-compose build
-      before_script:
-      - docker-compose up -d
-      - sleep 10
-      - docker ps -a
-      script:
-      - curl localhost:3001 -f
-      - node -e "console.log('Hi from NodeJS!')"
-      after_script:
-      - docker-compose down
+  - language: ruby
+    install:
+    - cd api
+    - docker-compose build
+    before_script:
+    - docker-compose up -d
+    - sleep 10
+    - docker ps -a
+    script:
+    - curl localhost:8080 -f
+    after_script:
+    - docker-compose down
+  - language: node_js
+    cache:
+      directories:
+      - node_modules
+    install:
+    - cd client
+    - docker-compose build
+    before_script:
+    - docker-compose up -d
+    - sleep 10
+    - docker ps -a
+    script:
+    - curl localhost:3001 -f
+    after_script:
+    - docker-compose down
+deploy:
+  provider: elasticbeanstalk
+  access_key_id:
+    secure: "rKqKRWKPqxzQS5xMj6mNYEBXgNzJ1CsKCfTCo8u2E+loUjhfNyuNXdCJUlKdTBtdfH4Cv6ZhApNE+WcY7K65GcX7Uxmz8l1cuO80Ca0uR+RBeyAQ39TIURuuogLt1KhN7GSDBQs+mSmQrvyagjCPUYPbSe8vhxDyWhEHXH6ohgopno43ODHeqySN9h7LM6KLEC0NID788BLGwLzovuQmYbxgzpgjsqQUjzQbc04Sp1qhIypKL3CXBEO0iB5cY3PADHHfILwd3TcHnIS2RCjq3B4WMnWwjyRzMpFvM3D3qC2PDb6PeYIr1Avec0qJrF5y39kjFQrFyikTUqXQ5DgGavS8F+oyoDmB8L7YAn9Yc0ImDklcy3XtdtSpDQws/Nj86eaay8nZs3yVWE00ZvFCCW1diaJaSOiKLJOwB2KtqgPeyG5ZoD6S8DQ6OoZY9Yt8ITxxA16zXU7PDWckLEC9GpSjJGNPr5mbeqne8Ubfzw2u76pILk6OZthiTrJ74jeaDc5gCAOl1P1g38oB3cm94GzJWsx82mviQ09eaK8yzGbCwhRd+dBDipoVjiWEcSKqkACv2ilCYjA3j/jQIkOn8cAoI/oeRZvr8jpH6M1vfL4DUep6aea+yCj6nLOND7DR+W47otMkQkBIOFXJ54lTBM8ygqYOa8b+4QMuZiPn3ug="
+  secret_access_key:
+    secure: "mpD/M1rQhKCt6JdCVR23vdG4ewUDPl2C28XCje0ikU2kvaxyfej1SXiYnqM7BvQs7i0IyR745gO0zzHl5z/Qv0LwIbMnp0Fvxm39XKprs8K9C0hNalRVkgSFxb0j6CMhMxp6K7os9Zw1V1YmpBZYpjgoxmTm+DTprYswC9tMwFNs6Y9vzXR9F6baF5X/hvB1qNAZNkkpBQJE2E03M7LdZ8LNX1ATQSCFrDpb6btP3fAq1acsfqH8Zg8VZK7LGdBctVQAkuupG9UBuKeNGbaMA+Y6ahF06IsgmKBPB8xZEmvjjnlxODS9oyqCzA6nFtnrcH2rqFnb64WWBaysl85FzCiL9GajI4YOYThp3j405I79CqXqx3lXMqXn7lg3i4Lxdqz+lWxlEvl9v5XXpG9da77o6q9Nui6kDoL0yOR9Skfj+7qoTEfseNg/pyXtEZxeXObnUr/XX2UcumSXg3NhIt8i5lyLa6ibYRRrUFVjqyrxNVM8yoOxX8EI1nE4g8SYza7W6yHn+C3FxS42ny4o7aHSmauPrmwnJ0RpiqnmnTU6fkh6UgrO90KCdKiV/iNnAOrWLoPGXa+yoWr1cCIf3CbVHXlhzzIviSDE7UKsS5xnmXdu+ZytC2bxm49PSsSVyMUIvu3OfCrWa/LdCuafhv8iMlZyBjUVzoKoii/hvTg="
+  region: "us-east-1"
+  app: "athena"
+  env: "Athena-env"
+  bucket_name: "elasticbeanstalk-us-east-1-559807477146"
