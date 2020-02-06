@@ -9,18 +9,18 @@ before_install:
 - sudo mv docker-compose /usr/local/bin
 jobs:
   include:
-  # - language: ruby
-  #   install:
-  #   - cd api
-  #   - docker-compose build
-  #   before_script:
-  #   - docker-compose up -d
-  #   - sleep 10
-  #   - docker ps -a
-  #   script:
-  #   - curl localhost:8080 -f
-  #   after_script:
-  #   - docker-compose down
+  - language: ruby
+    install:
+    - cd api
+    - docker-compose build
+    before_script:
+    - docker-compose up -d
+    - sleep 10
+    - docker ps -a
+    script:
+    - curl localhost:8080 -f
+    after_script:
+    - docker-compose down
   - language: node_js
     cache:
       directories:
@@ -36,14 +36,3 @@ jobs:
     - curl localhost:3001 -f
     after_script:
     - docker-compose down
-deploy:
-  skip_cleanup: true
-  provider: elasticbeanstalk
-  access_key_id:
-    secure: Yt+f+TDEwMbZh4Djp6RJYV90wKcLusyDIMBmppTRnxGKMXRkndG2i13rYoUkcjwfErvhwrYfmiSt6GNFNEQc0KZk6XtfOXdWEu69BjyLjVk7ldNBAmbKc5cicKEgxkfM5KSbWRE262R/jbx3w6iWDHAX4Ge43/HCj0p2X3ULH+FVBCnAxJDtS82k8/+nkJRODAjBNuH0sfWGA9PxqTCDDZFh0b8dlLR39CSY1vXoBXNzwo3e27RQllYtcChiJDVN2O9zxzj//1xhpqF7ZkvmdvJ4ZwDGB7CGQjLyJ7ZAXyZZ/KgwGxpYNTsBQoZ80Mi269tQdZrHmuHjMW54ZprTFwKkA+OT4yR9AEjbqnx1AWeSlIMbhaUZhPZhqI8Ftk9iNQaUvahHAZBDHKm6oDQ7ddKjM4KJDPLYWrgdq3EfbLPRfKKPGCO82Xvo0gKutnYIBPGTiiXvrLb+vXk8rfQSo2nqT8UF/nEGb+3IcsmbY2RFyPV3l+ceSsicybon40f8A1yfoTNp4OQKT/qE0XT59E5p8xeS5eDiB/Qs+bAZofeMmhYzdSxvE3TxXyFVMi50NBReNIk8pbtooHG9HDUZ/LM/hnRdjQ9d5t40MiRR7NGdCPKKhReh0Lc4UCCUSuGQ/ABiIoEBgn1lCWfJpzwm7cU7k+uuLP5IVtqVc1mBO/U=
-  secret_access_key:
-    secure: wSitUpTtL4BsWp7kn6RV9BDBTtqO/oJ/yWTIQufs+SFdq2nyNTAK5bSiqfSOa70GNXp0uViQZbU4zAtK5FD2QfNdGdVcpXPEWl6FrYrJTelHDrjZJpYMEwgycmE+4Wt4YuV30T3P/QLMQnXLhee/8qRX1IEMdOZLRGpDDpx2UBum4O6J5Y/ik7KYPDlW/1rYKeYbHPJTOLHaZ25SqrL1jm6PysoKAlpQ9aitTQLRHGbn3k8aZVSvCE7nB7e5vyqynFPwS2PDgt7W24Z3OVXoL+/yQJL91bYwp5RIVIht2A+c/QJhOhk8VtDEIaxK+UYBuqHrCKEakveBoX7Uhki3UF5ctgdFTlX58FLk5COHLfP2MVS+iw5tZCLnb6AT/p2xopPJnOz9FP6+f2hboMfypenePxBSleIOJJIxcFBXpu+t+U7w2iR+5f46lQMXdExXqww7dm8avwoSyzG8lUCKpP7gYJcxhGWkLLKst3CxHqTZWgxGM+zZZrTqDX/vLydfUa3zh+yApWF6xXvtnMDkQ6hCaBU8MK2e1qdZSE0WQXw6NWBINxFbvl/uMpgBDr0FPqLDh/0ezkf0IYhRbeyZRA9gRSA9DaMaaw7QDLYV7OdOZHcKaW7cIo6LWpNvmXfOPHWK1RbsbXev65uIfoR0aYTb2v8+jxKaRZOAwHQNVzU=
-  region: us-east-1
-  app: athena
-  env: Athena-env
-  bucket_name: elasticbeanstalk-us-east-1-559807477146
