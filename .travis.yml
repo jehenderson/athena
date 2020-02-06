@@ -18,7 +18,7 @@ jobs:
       - sleep 10
       - docker ps -a
       script:
-      - curl localhost://8080 -f
+      - curl localhost:8080 -f
       - python -c "print('Hi from Python!')"
       after_script:
       - docker-compose down
@@ -35,7 +35,7 @@ jobs:
       - sleep 10
       - docker ps -a
       script:
-      - curl localhost://3001 -f
+      - curl localhost:3001 -f
       - node -e "console.log('Hi from NodeJS!')"
       after_script:
       - docker-compose down
