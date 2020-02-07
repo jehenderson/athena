@@ -18,7 +18,7 @@ jobs:
   include:
   - language: ruby
     script:
-    - curl localhost:8000 -f
+    - curl localhost:8000
     after_script:
     - docker-compose down
   - language: node_js
@@ -26,6 +26,6 @@ jobs:
       directories:
       - node_modules
     script:
-    - curl localhost:3000 -f
+    - curl localhost:3000
     after_script:
     - docker-compose down
