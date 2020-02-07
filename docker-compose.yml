@@ -1,26 +1,32 @@
 version: '3'
 services:
-  db:
-    image: postgres
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
   backend:
-    build: ./api
-    command: bundle exec rails s -p 8000 -b '0.0.0.0'
-    volumes:
-      - ./api:/athena/api
-    ports:
-      - "8000:8000"
+    build : ./backend
     depends_on:
-      - db
+      - postgres
+    entrypoint: 'bundle exec puma -C config/puma.rb'
+    volumes:
+      - ./backend:/home/app/backend
   frontend:
-    image: "node:10-alpine"
-    user: "node"
-    working_dir: /athena/client
+    build: ./frontend
     volumes:
-      - ./client:/athena/client
-    ports:
-      - "3000:3000"
-    command: "npm start"
+      - ./frontend/frontend/src:/home/app/frontend/src
+      - ./frontend/frontend/public:/home/app/frontend/public
+  server:
+    build: ./nginx
     depends_on:
+      - frontend
       - backend
+    ports:
+      - "80:80"
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=skyuber
+      - POSTGRES_USER=backend
+      - POSTGRES_DB=backend_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
+    driver: local
