@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  backend:
+    build: ./api
+    command: bundle exec rails s -p 8000 -b '0.0.0.0'
+    volumes:
+      - ./api:/athena/api
+    ports:
+      - "8080:8000"
+    depends_on:
+      - db
+  frontend:
+    image: "node:10-alpine"
+    user: "node"
+    working_dir: /athena/client
+    volumes:
+      - ./client:/athena/client
+    ports:
+      - "3000:3000"
+    command: "yarn start"
+    depends_on:
+      - backend
