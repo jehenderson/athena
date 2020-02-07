@@ -10,7 +10,7 @@ services:
     volumes:
       - ./api:/athena/api
     ports:
-      - "8080:8000"
+      - "8000:8000"
     depends_on:
       - db
   frontend:
@@ -21,6 +21,6 @@ services:
       - ./client:/athena/client
     ports:
       - "3000:3000"
-    command: "yarn start"
+    command: "npm start"
     depends_on:
       - backend
