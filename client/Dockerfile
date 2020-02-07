@@ -13,5 +13,7 @@ RUN npm install --silent
 RUN npm install @material-ui/core --silent
 RUN npm install @material-ui/icons --silent
 
+EXPOSE 3000
+
 # start app
 CMD ["npm", "start"]
